@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  AI-gen-MAILService:
+    build: ./ai-gen-mailservice
+    container_name: ai-service
+    ports:
+      -  8083:8083
+    depends_on:
+          -  ConfigServer
+          -  Eureka_Server
+    environment:
+              -  SPRING_PROFILES_ACTIVE=docker
+    networks:
+          - spring-network
+
+  ConfigServer:
+    build: ./configserver
+    container_name: config-server
+    ports:
+      -  8888:8888
+    depends_on:
+      - Eureka_Server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-network
+
+  EmailService:
+    build: ./emailservice
+    container_name: email-service
+    ports:
+      -  8082:8082
+    depends_on:
+      - ConfigServer
+      -  Eureka_Server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-network
+
+  Eureka_Server:
+    build: ./eurekaserver
+    container_name: eureka-server
+    ports:
+      - 8761:8761
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-network
+
+  UserService:
+    build: ./userservice
+    container_name: user-service
+    ports:
+      - 8081:8081
+    depends_on:
+      - ConfigServer
+      -  Eureka_Server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring-network
+
+networks:
+  spring-network:
+    driver: bridge
