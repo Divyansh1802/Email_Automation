@@ -1,0 +1,17 @@
+spring:
+  mongodb:
+    uri: mongodb://localhost:27017/Email_automation
+    database: Email_automation
+
+server:
+  port: 8083
+
+gemini:
+  api:
+    url: ${gemini_url}
+    key: ${gemini_api_key}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
