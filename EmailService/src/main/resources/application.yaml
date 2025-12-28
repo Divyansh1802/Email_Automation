@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: email
+  config:
+    import: optional:configserver:http://localhost:8888
+  mail:
+    username: ${senderMail}
+    password: ${senderPassword}
+server:
+  port: 8082
