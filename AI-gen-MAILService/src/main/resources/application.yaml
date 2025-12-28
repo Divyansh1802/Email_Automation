@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: AI
+
+  config:
+    import: optional:configserver:http://localhost:8888
+gemini:
+  api:
+    url: ${gemini_api_url}
+    key: ${gemini_api_key}
